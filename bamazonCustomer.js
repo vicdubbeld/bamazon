@@ -92,16 +92,20 @@ function itemsForSale() {
 }
 
 function showTotal() {
-  connection.query("SELECT price FROM products", 
-  {
-    //   stock_quantity: answer.desired_quantity
+  var price;
+  var total = answer.desired_quantity * price;
+  connection.query(
+    "SELECT price FROM products",
+    {
+      //   stock_quantity: answer.desired_quantity
       price: answer.desired_quantity
-  },
-  function(err, answer) {
-    if (err) throw err;
+    },
+    function(err, answer) {
+      if (err) throw err;
 
-    var total = answer.desired_quantity * price;
+      // var total = answer.desired_quantity * price;
 
-    console.log("your grand total is: " + total);
-  });
+      console.log("your grand total is: " + total);
+    }
+  );
 }
