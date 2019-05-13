@@ -45,7 +45,7 @@ function itemsForSale() {
           message: "Which item would you like to purchase?"
         },
         {
-        // prompts users to enter # of items desired
+          // prompts users to enter # of items desired
           name: "desired_quantity",
           type: "input",
           message: "How many would you like?"
@@ -75,13 +75,14 @@ function itemsForSale() {
             ],
             function(error) {
               if (error) throw err;
-              console.log("Purchase successful");
+              console.log("Purchase successful!!!!!");
+              console.log("-------------------------");
+              showTotal();
               itemsForSale();
-            //   call showTotal();
             }
           );
         } else {
-            // not enough in stock
+          // not enough in stock
           console.log("sorry there are not enough in stock right now...");
           console.log("------------------------------------------------");
           itemsForSale();
@@ -90,5 +91,17 @@ function itemsForSale() {
   });
 }
 
+function showTotal() {
+  connection.query("SELECT price FROM products", 
+  {
+    //   stock_quantity: answer.desired_quantity
+      price: answer.desired_quantity
+  },
+  function(err, answer) {
+    if (err) throw err;
 
+    var total = answer.desired_quantity * price;
 
+    console.log("your grand total is: " + total);
+  });
+}
