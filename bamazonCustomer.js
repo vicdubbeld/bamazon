@@ -75,9 +75,10 @@ function itemsForSale() {
             ],
             function(error) {
               if (error) throw err;
+              // purchase went through
               console.log("Purchase successful!!!!!");
               console.log("-------------------------");
-              showTotal();
+              // showTotal();
               itemsForSale();
             }
           );
@@ -91,21 +92,21 @@ function itemsForSale() {
   });
 }
 
-function showTotal() {
-  var price;
-  var total = answer.desired_quantity * price;
-  connection.query(
-    "SELECT price FROM products",
-    {
-      //   stock_quantity: answer.desired_quantity
-      price: answer.desired_quantity
-    },
-    function(err, answer) {
-      if (err) throw err;
+// function showTotal() {
+//   var price;
+//   var total = answer.desired_quantity * price;
+//   connection.query(
+//     "SELECT price FROM products",
+//     {
+//       //   stock_quantity: answer.desired_quantity
+//       price: answer.desired_quantity
+//     },
+//     function(err, answer) {
+//       if (err) throw err;
 
-      // var total = answer.desired_quantity * price;
+      
 
-      console.log("your grand total is: " + total);
-    }
-  );
-}
+//       console.log("your grand total is: " + total);
+//     }
+//   );
+// }
