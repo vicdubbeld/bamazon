@@ -21,7 +21,19 @@ connection.connect(function(err) {
   }
   console.log("connected as id " + connection.threadId);
   itemsForSale();
+  queryId_name_price();
+
 });
+
+function queryId_name_price(){
+  return new Promise(function(resolve, reject) {
+      // query for all items in products table
+      connection.query("SELECT * FROM products", function(err, res) {
+          if (err) reject(err);
+          resolve(res);
+      });
+  });
+}
 
 // function to display all items for sale and ask user which item he/she would like to purchase
 
@@ -60,8 +72,7 @@ function itemsForSale() {
         }
 
         // check to see if there are enough in stock
-        // if there are not enough, "insufficient quantity"
-        // else, update database and show $ total
+        // if there are enough,
         if (chosenItem.stock_quantity > parseInt(answer.desired_quantity)) {
           connection.query(
             "UPDATE products SET ? WHERE ?",
@@ -73,11 +84,14 @@ function itemsForSale() {
                 item_id: chosenItem.item_id
               }
             ],
-            function(error) {
+            function(error, object) {
               if (error) throw err;
+              // var object = {};
               // purchase went through
               console.log("Purchase successful!!!!!");
               console.log("-------------------------");
+              var totalCost = (chosenItem.price * answer.desired_quantity).toFixed(2);
+              console.log('Your total cost is $' + totalCost);
               // showTotal();
               itemsForSale();
             }
@@ -91,6 +105,8 @@ function itemsForSale() {
       });
   });
 }
+
+
 
 // function showTotal() {
 //   var price;
